@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Church of the Highlands Bing Bong</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            position: relative;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-right: 15px;
+        }
+        .logo svg {
+            width: 100%;
+            height: 100%;
+        }
+        .title-container h1 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .title-container h2 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: bold;
+        }
+        .bing-bong {
+            background-color: #ff0000;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            padding-left: 40px;
+        }
+        .input-wrapper {
+            position: relative;
+        }
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff0000;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .format-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .format-options {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .format-option {
+            flex: 1;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+        .format-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .format-option.selected {
+            background-color: #1A1E23;
+            color: white;
+            border-color: #1A1E23;
+        }
+        .format-icon {
+            font-size: 24px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .format-icon-circle {
+            width: 50px;
+            height: 50px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .selected .format-icon-circle {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .format-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        .format-desc {
+            font-size: 14px;
+            color: #666;
+        }
+        .selected .format-desc {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .button {
+            background-color: #1A1E23;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: bold;
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: background-color 0.2s, transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .button:hover {
+            background-color: #2A3038;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .instructions {
+            background-color: #f8f8f8;
+            padding: 20px 30px;
+            border-radius: 12px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .instructions h2 {
+            margin-top: 0;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .instructions-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background-color: #1A1E23;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+        }
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .step-number {
+            width: 20px;
+            height: 20px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .step-text {
+            font-size: 14px;
+        }
+        .terminal-command {
+            background-color: #222;
+            color: #fff;
+            padding: 15px 15px 15px 40px;
+            border-radius: 8px;
+            font-family: monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            position: relative;
+        }
+        .terminal-controls {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            gap: 5px;
+        }
+        .terminal-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .terminal-red {
+            background-color: #ff5f57;
+        }
+        .terminal-yellow {
+            background-color: #febc2e;
+        }
+        .terminal-green {
+            background-color: #28c840;
+        }
+        .terminal-prompt {
+            color: #50fa7b;
+            margin-right: 5px;
+        }
+        .terminal-text {
+            color: #f8f8f2;
+        }
+        .copy-button {
+            background-color: #1A1E23;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            display: block;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .copy-button:hover {
+            background-color: #2A3038;
+        }
+        .copy-icon {
+            margin-right: 10px;
+            position: relative;
+        }
+        .copy-icon::before {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 12px;
+            height: 14px;
+            background-color: rgba(255, 255, 255, 0.8);
+            top: -5px;
+            left: -5px;
+            border-radius: 2px;
+        }
+        .copy-icon::after {
+            content: "";
+            display: block;
+            width: 12px;
+            height: 14px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                        <path d="M40,10 C25,10 10,25 0,50 C15,35 40,55 65,30 C55,20 50,10 40,10 Z" fill="#1A1E23"/>
+                        <path d="M0,50 C10,45 20,50 30,45 C40,40 50,45 60,40 C70,35 80,40 90,35 L90,65 L0,65 Z" fill="#1A1E23"/>
+                        <circle cx="40" cy="30" r="10" fill="white"/>
+                        <path d="M40,15 L40,23 M25,30 L33,30 M47,30 L55,30 M30,20 L35,25 M50,20 L45,25 M30,40 L35,35 M50,40 L45,35" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="title-container">
+                    <h1>CHURCH OF THE</h1>
+                    <h2>Highlands</h2>
+                </div>
+            </div>
+            <div class="bing-bong">
+                Bing Bong
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label for="youtube-url">YouTube URL:</label>
+            <div class="input-wrapper">
+                <span class="input-icon">▶</span>
+                <input type="text" id="youtube-url" placeholder="Paste YouTube URL here..." />
+            </div>
+        </div>
+        
+        <div class="format-title">Select Format:</div>
+        
+        <div class="format-options">
+            <div class="format-option" data-format="mp4-720" onclick="selectFormat(this)">
+                <div class="format-icon">
+                    <div class="format-icon-circle">🖥️</div>
+                </div>
+                <div class="format-name">MP4 720p</div>
+                <div class="format-desc">Good quality,<br>medium file</div>
+            </div>
+            
+            <div class="format-option selected" data-format="mp4-1080" onclick="selectFormat(this)">
+                <div class="format-icon">
+                    <div class="format-icon-circle">📺</div>
+                </div>
+                <div class="format-name">MP4 1080p</div>
+                <div class="format-desc">Great quality,<br>larger file</div>
+            </div>
+            
+            <div class="format-option" data-format="audio" onclick="selectFormat(this)">
+                <div class="format-icon">
+                    <div class="format-icon-circle">🎵</div>
+                </div>
+                <div class="format-name">MP3 Audio</div>
+                <div class="format-desc">Audio only,<br>small file</div>
+            </div>
+        </div>
+        
+        <button class="button" onclick="generateCommand()">Generate Download Command</button>
+        
+        <div id="output" class="hidden">
+            <div class="instructions">
+                <div class="instructions-bar"></div>
+                <h2>Download Instructions</h2>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Copy the command below</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Open Terminal (Applications → Utilities → Terminal)</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Paste the command and press Enter</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">The file will download to your Downloads folder</div>
+                </div>
+                
+                <div class="terminal-command">
+                    <div class="terminal-controls">
+                        <div class="terminal-dot terminal-red"></div>
+                        <div class="terminal-dot terminal-yellow"></div>
+                        <div class="terminal-dot terminal-green"></div>
+                    </div>
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-text" id="terminal-command-text">yt-dlp -f "299+140" -o "~/Downloads/%(title)s.mp4" "https://youtu.be/..."</span>
+                </div>
+                
+                <button class="copy-button" onclick="copyCommand()">
+                    <span class="copy-icon"></span>
+                    Copy Command
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedFormat = "mp4-1080"; // Default format
+        
+        function selectFormat(element) {
+            // Remove selected class from all options
+            document.querySelectorAll('.format-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            element.classList.add('selected');
+            
+            // Update selected format
+            selectedFormat = element.getAttribute('data-format');
+            
+            // If command was already generated, update it
+            if (!document.getElementById('output').classList.contains('hidden')) {
+                generateCommand();
+            }
+        }
+        
+        function generateCommand() {
+            const youtubeUrl = document.getElementById('youtube-url').value.trim();
+            
+            if (!youtubeUrl) {
+                alert("Please enter a YouTube URL");
+                return;
+            }
+            
+            if (!youtubeUrl.includes('youtube.com/watch?v=') && !youtubeUrl.includes('youtu.be/')) {
+                alert("Please enter a valid YouTube URL");
+                return;
+            }
+            
+            let command = 'yt-dlp ';
+            
+            // Add format options based on selection
+            switch(selectedFormat) {
+                case 'mp4-720':
+                    command += '-f "136+140" ';
+                    break;
+                case 'mp4-1080':
+                    command += '-f "299+140" ';
+                    break;
+                case 'audio':
+                    command += '-x --audio-format mp3 ';
+                    break;
+            }
+            
+            // Add output path
+            if (selectedFormat === 'audio') {
+                command += '-o "~/Downloads/%(title)s.mp3" ';
+            } else {
+                command += '-o "~/Downloads/%(title)s.mp4" ';
+            }
+            
+            // Add URL
+            command += `"${youtubeUrl}"`;
+            
+            // Display the command
+            document.getElementById('terminal-command-text').textContent = command;
+            document.getElementById('output').classList.remove('hidden');
+        }
+        
+        function copyCommand() {
+            const commandText = document.getElementById('terminal-command-text').textContent;
+            
+            // Create a temporary textarea element to copy from
+            const textarea = document.createElement('textarea');
+            textarea.value = commandText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            
+            // Change button text temporarily
+            const copyButton = document.querySelector('.copy-button');
+            const originalText = copyButton.innerHTML;
+            copyButton.textContent = 'Copied!';
+            setTimeout(() => {
+                copyButton.innerHTML = originalText;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
